@@ -10,21 +10,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.nativechatapp.Screens.LoginScreen
+import com.example.nativechatapp.Screens.SignUpScreen
 import com.example.nativechatapp.ui.theme.NativechatappTheme
 
 
-sealed class DestinationScreen(var route: String){
-    object SignUp:DestinationScreen("signup")
-    object Login:DestinationScreen("login")
-    object Profile:DestinationScreen("profile")
-    object ChatList:DestinationScreen("chatList")
-    object SingleChat:DestinationScreen("singleChat/{chatId}"){
-        fun createRoute(id:String)="singleChat/${id}"
+sealed class DestinationScreen(var route: String) {
+    object SignUp : DestinationScreen("signup")
+    object Login : DestinationScreen("login")
+    object Profile : DestinationScreen("profile")
+    object ChatList : DestinationScreen("chatList")
+    object SingleChat : DestinationScreen("singleChat/{chatId}") {
+        fun createRoute(id: String) = "singleChat/${id}"
     }
-    object StatusList:DestinationScreen("statusList")
-    object SingleStatus:DestinationScreen("singleStatus/{userId}"){
-        fun createRoute(userId:String)="singleStatus/${userId}"
+
+    object StatusList : DestinationScreen("statusList")
+    object SingleStatus : DestinationScreen("singleStatus/{userId}") {
+        fun createRoute(userId: String) = "singleStatus/${userId}"
     }
 }
 
@@ -45,8 +50,14 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun ChatAppNavigation(){
-        LoginScreen()
+    fun ChatAppNavigation() {
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = DestinationScreen.SignUp.route) {
+            composable(DestinationScreen.SignUp.route) { SignUpScreen(navController) }
+            composable(DestinationScreen.Login.route) { LoginScreen() }
+
+        }
+
     }
 
 }
