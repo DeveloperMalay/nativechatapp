@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-    id ("com.google.dagger.hilt.android")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -69,18 +69,18 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    implementation ("com.google.dagger:hilt-android:2.51")
-    ksp ("com.google.dagger:hilt-compiler:2.51")
+    implementation("com.google.dagger:hilt-android:2.51")
+    ksp("com.google.dagger:hilt-compiler:2.51")
 
     // For instrumentation tests
-    androidTestImplementation  ("com.google.dagger:hilt-android-testing:2.51")
-    kspAndroidTest ("com.google.dagger:hilt-compiler:2.51")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.51")
+    kspAndroidTest("com.google.dagger:hilt-compiler:2.51")
 
     // For local unit tests
     testImplementation(" 'com.google.dagger:hilt-android-testing:2.51'")
-    kspTest ("com.google.dagger:hilt-compiler:2.51")
+    kspTest("com.google.dagger:hilt-compiler:2.51")
 
     val nav_version = "2.7.7"
-
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation("androidx.navigation:navigation-compose:$nav_version")
 }
