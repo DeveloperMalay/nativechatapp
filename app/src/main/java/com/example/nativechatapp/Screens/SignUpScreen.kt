@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +16,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.TextFieldValue
@@ -24,6 +27,8 @@ import androidx.navigation.NavController
 import com.example.nativechatapp.DestinationScreen
 import com.example.nativechatapp.LCViewModel
 import com.example.nativechatapp.R
+import com.example.nativechatapp.navigateTo
+
 
 @Composable
 fun SignUpScreen(navController: NavController, vm: LCViewModel) {
@@ -49,6 +54,7 @@ fun SignUpScreen(navController: NavController, vm: LCViewModel) {
             val passwordState = remember {
                 mutableStateOf(TextFieldValue())
             }
+            val focus = LocalFocusManager.current
             Image(
                 painter = painterResource(id = R.drawable.speech),
                 contentDescription = null,
@@ -88,6 +94,23 @@ fun SignUpScreen(navController: NavController, vm: LCViewModel) {
                 value = passwordState.value, onValueChange = {
                     passwordState.value = it
                 })
+
+            Button(
+                onClick = { /*TODO*/ }, modifier = Modifier.padding(8.dp)
+            ) {
+                Text(text = "SIGN UP")
+            }
+            Text(
+                text = "Already a User? Go to login >",
+
+                color = Color.Blue,
+                fontFamily = FontFamily.SansSerif,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clickable {
+                        navigateTo(navController, DestinationScreen.Login.route)
+                    }
+            )
         }
     }
 
