@@ -5,9 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -36,7 +40,10 @@ fun SignUpScreen(navController: NavController, vm: LCViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+//                .size(100.dp)
+                .padding(horizontal = 30.dp),
+//                .verticalScroll(rememberScrollState()),
 
             horizontalAlignment = Alignment.CenterHorizontally
 
@@ -71,26 +78,38 @@ fun SignUpScreen(navController: NavController, vm: LCViewModel) {
 
             OutlinedTextField(
                 label = { Text(text = "Name") },
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                singleLine = true,
                 value = nameState.value, onValueChange = {
                     nameState.value = it
                 })
 
             OutlinedTextField(
                 label = { Text(text = "Number") },
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                singleLine = true,
                 value = numberState.value, onValueChange = {
                     numberState.value = it
                 })
             OutlinedTextField(
                 label = { Text(text = "Email") },
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                singleLine = true,
                 value = emailState.value, onValueChange = {
                     emailState.value = it
                 })
             OutlinedTextField(
                 label = { Text(text = "Password") },
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                singleLine = true,
                 value = passwordState.value, onValueChange = {
                     passwordState.value = it
                 })
