@@ -115,7 +115,14 @@ fun SignUpScreen(navController: NavController, vm: LCViewModel) {
                 })
 
             Button(
-                onClick = { /*TODO*/ }, modifier = Modifier.padding(8.dp)
+                onClick = {
+                    vm.signUp(
+                        nameState.value.text,
+                        numberState.value.text,
+                        emailState.value.text,
+                        passwordState.value.text
+                    )
+                }, modifier = Modifier.padding(8.dp)
             ) {
                 Text(text = "SIGN UP")
             }

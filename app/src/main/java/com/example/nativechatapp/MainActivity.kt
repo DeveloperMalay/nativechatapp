@@ -15,6 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.nativechatapp.Screens.LoginScreen
 import com.example.nativechatapp.Screens.SignUpScreen
 import com.example.nativechatapp.ui.theme.NativechatappTheme
+import com.google.firebase.FirebaseApp
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 
@@ -33,9 +35,11 @@ sealed class DestinationScreen(var route: String) {
     }
 }
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
         setContent {
             NativechatappTheme {
                 // A surface container using the 'background' color from the theme
