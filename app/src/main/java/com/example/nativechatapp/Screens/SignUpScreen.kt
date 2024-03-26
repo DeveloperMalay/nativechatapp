@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.nativechatapp.CommonProgressBar
 import com.example.nativechatapp.DestinationScreen
 import com.example.nativechatapp.LCViewModel
 import com.example.nativechatapp.R
@@ -138,6 +139,9 @@ fun SignUpScreen(navController: NavController, vm: LCViewModel) {
                     }
             )
         }
+    }
+    if (vm.inProgress.value) {
+        CommonProgressBar()
     }
 
 }
