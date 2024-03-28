@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.nativechatapp.CheckSignedIn
 import com.example.nativechatapp.CommonProgressBar
 import com.example.nativechatapp.DestinationScreen
 import com.example.nativechatapp.LCViewModel
@@ -37,6 +38,8 @@ import com.example.nativechatapp.navigateTo
 
 @Composable
 fun SignUpScreen(navController: NavController, vm: LCViewModel) {
+
+    CheckSignedIn(vm = vm, navController = navController)
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier

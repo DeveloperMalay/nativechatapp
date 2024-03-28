@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -39,5 +41,20 @@ fun CommonProgressBar() {
         CircularProgressIndicator(
             modifier = Modifier.alpha(1f)
         )
+    }
+}
+
+
+@Composable
+fun CheckSignedIn(vm: LCViewModel, navController: NavController) {
+    val alreadySignIn = remember {
+        mutableStateOf(false)
+    }
+    val signIn = vm.isSignedIn.value
+    if (signIn && !alreadySignIn.value) {
+        alreadySignIn.value = true
+        navController.navigate(DestinationScreen.ChatList.route) {
+            popUpTo(0)
+        }
     }
 }
