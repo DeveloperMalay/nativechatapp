@@ -37,17 +37,31 @@ class LCViewModel @Inject constructor(
 
     fun signUp(name: String, number: String, email: String, password: String) {
         inProgress.value = true
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-            if (it.isSuccessful) {
-                inProgress.value = false
-                isSignedIn.value = true
-                createOrUpdateUser(name, number)
-                Log.d("Tag", "signUp: User Logged in")
+        if (name.isEmpty() or number.isEmpty() or email.isEmpty() or password.isEmpty()) {
+            handleException(customMessage = "Please Fill All the fields")
+            return
+        }
+
+        inProgress.value = true
+        db.collection(USER_NODE).whereEqualTo("number", number).get().addOnSuccessListener {
+            if (it.isEmpty) {
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        inProgress.value = false
+                        isSignedIn.value = true
+                        createOrUpdateUser(name, number)
+                        Log.d("Tag", "signUp: User Logged in")
+                    } else {
+                        handleException(it.exception)
+                        Log.d("Tag", "signUp: User creating unsuccessfull ${it.result}")
+                    }
+                }
+
             } else {
-                handleException(it.exception)
-                Log.d("Tag", "signUp: User creating unsuccessfull ${it.result}")
+                handleException(customMessage = "number already Exits")
             }
         }
+
     }
 
     private fun createOrUpdateUser(
@@ -67,7 +81,7 @@ class LCViewModel @Inject constructor(
             inProgress.value = true
             db.collection(USER_NODE).document(uid).get().addOnSuccessListener {
                 if (it.exists()) {
-//update User data
+                    //update User data
                 } else {
                     db.collection(USER_NODE).document(uid).set(userData)
                     inProgress.value = false
