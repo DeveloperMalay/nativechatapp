@@ -14,7 +14,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.nativechatapp.Screens.ChatListScreen
 import com.example.nativechatapp.Screens.LoginScreen
+import com.example.nativechatapp.Screens.ProfileScreen
 import com.example.nativechatapp.Screens.SignUpScreen
+import com.example.nativechatapp.Screens.SingleChatScreen
+import com.example.nativechatapp.Screens.SingleStatusScreen
 import com.example.nativechatapp.ui.theme.NativechatappTheme
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,9 +63,11 @@ class MainActivity : ComponentActivity() {
         val vm = hiltViewModel<LCViewModel>()
         NavHost(navController = navController, startDestination = DestinationScreen.SignUp.route) {
             composable(DestinationScreen.SignUp.route) { SignUpScreen(navController, vm) }
-            composable(DestinationScreen.Login.route) { LoginScreen() }
+            composable(DestinationScreen.Login.route) { LoginScreen(navController, vm) }
             composable(DestinationScreen.ChatList.route) { ChatListScreen() }
-
+            composable(DestinationScreen.Profile.route) { ProfileScreen() }
+            composable(DestinationScreen.SingleChat.route) { SingleChatScreen() }
+            composable(DestinationScreen.SingleStatus.route) { SingleStatusScreen() }
         }
 
     }
