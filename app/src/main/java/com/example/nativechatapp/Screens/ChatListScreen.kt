@@ -9,9 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.nativechatapp.LCViewModel
 
 @Composable
-fun ChatListScreen() {
+fun ChatListScreen(navController: NavController, vm: LCViewModel) {
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -19,5 +21,9 @@ fun ChatListScreen() {
         verticalArrangement = Arrangement.Center
     ) {
         Text("ChatList screen", modifier = Modifier.padding(8.dp))
+        BottomNavigationMenu(
+            selectedItem = BottomNavigationItem.CHATLIST,
+            navController = navController
+        )
     }
 }

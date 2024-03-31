@@ -18,6 +18,7 @@ import com.example.nativechatapp.Screens.ProfileScreen
 import com.example.nativechatapp.Screens.SignUpScreen
 import com.example.nativechatapp.Screens.SingleChatScreen
 import com.example.nativechatapp.Screens.SingleStatusScreen
+import com.example.nativechatapp.Screens.StatusScreen
 import com.example.nativechatapp.ui.theme.NativechatappTheme
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,8 +65,9 @@ class MainActivity : ComponentActivity() {
         NavHost(navController = navController, startDestination = DestinationScreen.SignUp.route) {
             composable(DestinationScreen.SignUp.route) { SignUpScreen(navController, vm) }
             composable(DestinationScreen.Login.route) { LoginScreen(navController, vm) }
-            composable(DestinationScreen.ChatList.route) { ChatListScreen() }
-            composable(DestinationScreen.Profile.route) { ProfileScreen() }
+            composable(DestinationScreen.ChatList.route) { ChatListScreen(navController, vm) }
+            composable(DestinationScreen.Profile.route) { ProfileScreen(navController, vm) }
+            composable(DestinationScreen.StatusList.route) { StatusScreen(navController, vm) }
             composable(DestinationScreen.SingleChat.route) { SingleChatScreen() }
             composable(DestinationScreen.SingleStatus.route) { SingleStatusScreen() }
         }
