@@ -98,38 +98,46 @@ fun ProfileContent(
         CommonDivider()
         ProfileImage(imageUrl = imageUrl, vm = vm)
         CommonDivider()
-        Text(text = "Name", modifier = Modifier.width(100.dp))
-        TextField(
-            value = name, onValueChange = onNameChange,
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.Black,
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent,
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Name", modifier = Modifier.width(100.dp))
+            TextField(
+                value = name, onValueChange = onNameChange,
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent,
+                )
             )
-        )
-        CommonDivider()
-        Text(text = "Number", modifier = Modifier.width(100.dp))
-        TextField(
-            value = number, onValueChange = onNumberChange,
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.Black,
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent,
-            )
-        )
+        }
 
         CommonDivider()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Number", modifier = Modifier.width(100.dp))
+            TextField(
+                value = number, onValueChange = onNumberChange,
+                colors = TextFieldDefaults.colors(
+                    focusedTextColor = Color.Black,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent,
+                )
+            )
+        }
+        
+        CommonDivider()
         Text(text = "LogOut", modifier = Modifier.clickable { })
-//        Row(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(4.dp),
-//            verticalAlignment = Alignment.CenterVertically
-//        ) {
-//
-//        }
+
     }
 }
 
@@ -140,7 +148,6 @@ fun ProfileImage(imageUrl: String?, vm: LCViewModel) {
         contract = ActivityResultContracts.GetContent(),
     ) { uri ->
         uri?.let {
-
             vm.uploadProfileImage(uri)
         }
     }

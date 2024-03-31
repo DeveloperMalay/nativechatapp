@@ -156,8 +156,6 @@ class LCViewModel @Inject constructor(
             val result = it.metadata?.reference?.downloadUrl
             result?.addOnSuccessListener(onSuccess)
             inProgress.value = false
-
-
         }
             .addOnFailureListener {
                 handleException(it)
