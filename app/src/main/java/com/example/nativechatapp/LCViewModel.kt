@@ -85,13 +85,13 @@ class LCViewModel @Inject constructor(
         }
     }
 
-    private fun createOrUpdateUser(
+    fun createOrUpdateUser(
         name: String? = null,
         number: String? = null,
         imageUrl: String? = null
     ) {
         val uid = auth.currentUser?.uid
-        var userData = UserData(
+        val userData = UserData(
             userId = uid,
             name = name ?: userData.value?.name,
             number = number ?: userData.value?.number,
@@ -100,19 +100,37 @@ class LCViewModel @Inject constructor(
 
         uid?.let {
             inProgress.value = true
-            db.collection(USER_NODE).document(uid).get().addOnSuccessListener {
-                if (it.exists()) {
-                    //update User data
+            db.collection(USER_NODE).document(uid).get().addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    // Update user data
+                    db.collection(USER_NODE).document(uid).update(
+                        mapOf(
+                            "name" to userData.name,
+                            "number" to userData.number,
+                            "imageUrl" to userData.imageUrl
+                        )
+                    ).addOnSuccessListener {
+                        inProgress.value = false
+                        getUserData(uid)
+                    }.addOnFailureListener { exception ->
+                        handleException(exception, "Cannot Update User")
+                    }
                 } else {
+                    // Create new user data
                     db.collection(USER_NODE).document(uid).set(userData)
-                    inProgress.value = false
-                    getUserData(uid)
+                        .addOnSuccessListener {
+                            inProgress.value = false
+                            getUserData(uid)
+                        }.addOnFailureListener { exception ->
+                            handleException(exception, "Cannot Create User")
+                        }
                 }
-            }.addOnFailureListener {
-                handleException(it, "Cannot Retrieve User")
+            }.addOnFailureListener { exception ->
+                handleException(exception, "Cannot Retrieve User")
             }
         }
     }
+
 
     private fun getUserData(uid: String) {
         inProgress.value = true
@@ -161,6 +179,15 @@ class LCViewModel @Inject constructor(
                 handleException(it)
             }
     }
+
+
+    fun logout() {
+        auth.signOut()
+        isSignedIn.value = false
+        userData.value = null
+        eventMutableState.value = Event("Logged Out")
+    }
+
 }
 
 
