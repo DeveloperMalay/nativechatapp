@@ -1,5 +1,6 @@
 package com.example.nativechatapp
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 
 fun navigateTo(navController: NavController, route: String) {
     navController.navigate(route) {
@@ -82,10 +84,17 @@ fun CommonImage(
     modifier: Modifier = Modifier.wrapContentSize(),
     contentScale: ContentScale = ContentScale.Crop,
 ) {
-    AsyncImage(
-        model = data,
+    val painter = rememberImagePainter(data = data)
+    Image(
+        painter = painter,
+        contentScale = contentScale,
         contentDescription = null,
-        modifier = modifier,
-        contentScale = contentScale
+        modifier = modifier
     )
+//    AsyncImage(
+//        model = data,
+//        contentDescription = null,
+//        modifier = modifier,
+//        contentScale = contentScale
+//    )
 }
