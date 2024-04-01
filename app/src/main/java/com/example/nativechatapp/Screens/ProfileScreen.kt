@@ -74,7 +74,10 @@ fun ProfileScreen(navController: NavController, vm: LCViewModel) {
                 onSave = {
                     vm.createOrUpdateUser(name = name, number = number)
                 },
-                onLogOut = {},
+                onLogOut = {
+                    vm.logout()
+                    navigateTo(navController, DestinationScreen.Login.route)
+                },
             )
             BottomNavigationMenu(
                 selectedItem = BottomNavigationItem.PROFILE,
@@ -155,10 +158,11 @@ fun ProfileContent(
 
         CommonDivider()
         Row(
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
-
-            ) {
-            Text(text = "LogOut", modifier = Modifier.clickable { })
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "LogOut", modifier = Modifier.clickable { onLogOut.invoke() })
         }
 
 

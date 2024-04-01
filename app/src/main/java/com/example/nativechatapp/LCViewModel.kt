@@ -179,6 +179,15 @@ class LCViewModel @Inject constructor(
                 handleException(it)
             }
     }
+
+
+    fun logout() {
+        auth.signOut()
+        isSignedIn.value = false
+        userData.value = null
+        eventMutableState.value = Event("Logged Out")
+    }
+
 }
 
 
