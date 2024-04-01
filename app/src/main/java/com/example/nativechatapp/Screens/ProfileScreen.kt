@@ -101,7 +101,7 @@ fun ProfileContent(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp),
+                .padding(horizontal = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Name", modifier = Modifier.width(100.dp))
@@ -120,7 +120,7 @@ fun ProfileContent(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp),
+                .padding(horizontal = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Number", modifier = Modifier.width(100.dp))
@@ -134,9 +134,15 @@ fun ProfileContent(
                 )
             )
         }
-        
+
         CommonDivider()
-        Text(text = "LogOut", modifier = Modifier.clickable { })
+        Row(
+            horizontalArrangement = Arrangement.Center,
+
+            ) {
+            Text(text = "LogOut", modifier = Modifier.clickable { })
+        }
+
 
     }
 }
