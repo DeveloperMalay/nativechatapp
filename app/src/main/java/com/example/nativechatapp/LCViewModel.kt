@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.nativechatapp.data.ChatsData
 import com.example.nativechatapp.data.Event
 import com.example.nativechatapp.data.USER_NODE
 import com.example.nativechatapp.data.UserData
@@ -25,10 +26,11 @@ class LCViewModel @Inject constructor(
 
 
     var inProgress = mutableStateOf(false)
+    var inProgressChats = mutableStateOf(false)
     val eventMutableState = mutableStateOf<Event<String>?>(null)
     var isSignedIn = mutableStateOf(false)
     val userData = mutableStateOf<UserData?>(null)
-
+    val chats = mutableStateOf<List<ChatsData>>(listOf())
 
     init {
         val currentUser = auth.currentUser
@@ -188,6 +190,10 @@ class LCViewModel @Inject constructor(
         eventMutableState.value = Event("Logged Out")
     }
 
+
+    fun onAddChat(string: String) {
+
+    }
 }
 
 
