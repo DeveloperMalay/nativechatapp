@@ -1,11 +1,11 @@
 package com.example.nativechatapp.Screens
 
-import android.icu.text.CaseMap.Title
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -29,63 +29,90 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.nativechatapp.CommonProgressBar
+import com.example.nativechatapp.CommonRow
+import com.example.nativechatapp.DestinationScreen
 import com.example.nativechatapp.LCViewModel
 import com.example.nativechatapp.TitleText
+import com.example.nativechatapp.navigateTo
 
 @Composable
 fun ChatListScreen(navController: NavController, vm: LCViewModel) {
-
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        val inProgressChats = vm.inProgressChats;
-        if (inProgressChats.value) {
-            CommonProgressBar()
-        } else {
-            val chats = vm.chats.value
-            val userData = vm.userData.value
-            val showDialog = remember {
-                mutableStateOf(false)
-            }
-            val onFabClick: () -> Unit = { showDialog.value = true }
-            val onDismiss: () -> Unit = { showDialog.value = false }
-            val onAddChat: (String) -> Unit = {
-                vm.onAddChat(it)
-                showDialog.value = false
-            }
-            Scaffold(
-                floatingActionButton = {
-                    FAB(
-                        showDialog = showDialog.value,
-                        onFabClick = onFabClick,
-                        onDismiss = onDismiss,
-                        onAddChat = onAddChat
-                    )
-                },
-
-                content = {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(it)
-                    ) {
-                        TitleText(txt = "Chats")
-                        BottomNavigationMenu(
-                            selectedItem = BottomNavigationItem.CHATLIST,
-                            navController = navController
-                        )
-                    }
-                }
-            )
-
-
+    val inProgressChats = vm.inProgressChats;
+    if (inProgressChats.value) {
+        CommonProgressBar()
+    } else {
+        val chats = vm.chats.value
+        val userData = vm.userData.value
+        val showDialog = remember {
+            mutableStateOf(false)
         }
+        val onFabClick: () -> Unit = { showDialog.value = true }
+        val onDismiss: () -> Unit = { showDialog.value = false }
+        val onAddChat: (String) -> Unit = {
+            vm.onAddChat(it)
+            showDialog.value = false
+        }
+        Scaffold(
+            floatingActionButton = {
+                FAB(
+                    showDialog = showDialog.value,
+                    onFabClick = onFabClick,
+                    onDismiss = onDismiss,
+                    onAddChat = onAddChat
+                )
+            },
 
+            content = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it)
+                ) {
+                    TitleText(txt = "Chats")
+                    if (chats.isEmpty()) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .weight(1f),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+                        ) {
+                            Text(text = "No Chats Available")
+                        }
+                    } else {
+                        LazyColumn(modifier = Modifier.weight(1f)) {
+                            items(chats) { chat ->
+                                val chatUser = if (chat.user1.userId == userData?.userId) {
+                                    chat.user2
+                                } else {
+                                    chat.user1
+                                }
 
+                                CommonRow(imageUrl = chatUser.imageUrl, name = chatUser.name) {
+                                    chat.chatId?.let {
+                                        navigateTo(
+                                            navController,
+                                            DestinationScreen.SingleChat.createRoute(
+                                                id = it
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    BottomNavigationMenu(
+                        selectedItem = BottomNavigationItem.CHATLIST,
+                        navController = navController
+                    )
+                }
+            },
+
+            )
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
