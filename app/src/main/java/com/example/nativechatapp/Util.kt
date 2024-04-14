@@ -2,9 +2,14 @@ package com.example.nativechatapp
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -89,12 +94,7 @@ fun CommonImage(
         contentDescription = null,
         modifier = modifier
     )
-//    AsyncImage(
-//        model = data,
-//        contentDescription = null,
-//        modifier = modifier,
-//        contentScale = contentScale
-//    )
+
 }
 
 @Composable
@@ -105,5 +105,33 @@ fun TitleText(txt: String) {
         fontSize = 35.sp,
         modifier = Modifier.padding(8.dp)
     )
+}
+
+
+@Composable
+fun CommonRow(imageUrl: String?, name: String?, onItemClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(75.dp)
+            .clickable { onItemClick.invoke() },
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        CommonImage(
+            data = imageUrl,
+            modifier = Modifier
+                .padding(8.dp)
+                .size(50.dp)
+                .clip(CircleShape)
+                .background(
+                    Color.Gray
+                )
+        )
+        Text(
+            text = name ?: "___",
+            fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 4.dp)
+        )
+
+    }
 }
 

@@ -68,7 +68,12 @@ class MainActivity : ComponentActivity() {
             composable(DestinationScreen.ChatList.route) { ChatListScreen(navController, vm) }
             composable(DestinationScreen.Profile.route) { ProfileScreen(navController, vm) }
             composable(DestinationScreen.StatusList.route) { StatusScreen(navController, vm) }
-            composable(DestinationScreen.SingleChat.route) { SingleChatScreen() }
+            composable(DestinationScreen.SingleChat.route) {
+                val chatId = it.arguments?.getString("chatId")
+                chatId?.let {
+                    SingleChatScreen(navController, vm, chatId)
+                }
+            }
             composable(DestinationScreen.SingleStatus.route) { SingleStatusScreen() }
         }
 
