@@ -24,9 +24,11 @@ fun SingleChatScreen(navController: NavController, vm: LCViewModel, chatId: Stri
     var reply by rememberSaveable {
         mutableStateOf("")
     }
-    ReplyBox(reply = reply, onReplyChange = { reply = it }) {
-
+    val onSendReply = {
+        vm.onSendReply(chatId, reply)
+        reply = ""
     }
+    ReplyBox(reply = reply, onReplyChange = { reply = it }, onSendReply = onSendReply)
 }
 
 
